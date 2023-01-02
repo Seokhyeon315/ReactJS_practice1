@@ -1,70 +1,95 @@
-# Getting Started with Create React App
+# React JS Practice 1
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> This project is a practice of building Responsive website using React Javascript and TailwindCSS.
 
-## Available Scripts
+## Installations & Setups
 
-In the project directory, you can run:
+1. Create React project: `npx create-react-app react_practice1`
+2. Install Tailwind CSS
+   - `npm install -D tailwindcss postcss autoprefixer`
+   - `npx tailwindcss init -p`
+   - Add "./src/\*_/_.{js,jsx,ts,tsx}", on tailwind.config.js file
+   - Add tailwind directives to index.css
+3. Install react-icons: `npm install react-icons --save`
 
-### `npm start`
+## Major features:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Responsive Navbar
+- Hero section with text animation
+- Hover effect cards modals
+- Footer
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+### Step 1: Responsive Navigation bar
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+In this project, to make responsive navigation bar, first, made Navbar.jsx file inside of components folder and `export default Navbar`. At Navbar.jsx, I made two different `<div>` tags: one for mobile version and the other for bigger screen version. I am not yet familiar with TailwindCSS responsive design so, it might look very hardcoding.
 
-### `npm run build`
+**Goals of responsive navbar are below:**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1.  As soon as the screen reaches mobile size, the expanded navbar on top disappears and menu icon shows up and vise versa.
+2.  If user clicks the menu icon, the mobile version navbar will be smoothly in-and-out.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To achieve goal #2, I made a `<div>` to put react-icon and then use jsx condition statement.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```jsx
+<div onClick={handleNav} className="block md:hidden">
+  {!nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
+</div>
+```
 
-### `npm run eject`
+To make click transition for menu icon, I used `useState()` and made `handleNav` function to change its state.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```jsx
+let [nav, setNav] = useState(false);
+const handleNav = () => {
+  setNav(!nav); //Change nav state to opposite state
+};
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+For mobile version's navbar, use tailwindcss to adjust its size, fixed on left, and **ease-in-out**, **duration-500** allows to make soomth transition.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```jsx
+<div
+  className={
+    !nav
+      ? "fixed left-0 top-0 h-full w-[60%] border-r border-r-gray-900 bg-[#000300] ease-in-out duration-500"
+      : "fixed left-[-100%]"
+  }
+>
+  <h1 className="w-full text-3xl font-bold text-[#00df9a] m-5">BLANK.</h1>
+  <ul className="uppercase p-4">
+    <li className="p-4 border-b border-gray-600">Home</li>
+    <li className="p-4 border-b border-gray-600">Company</li>
+    <li className="p-4 border-b border-gray-600">Resources</li>
+    <li className="p-4 border-b border-gray-600">About</li>
+    <li className="p-4">Contact</li>
+  </ul>
+</div>
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+To achieve goal #1, simply use tailwindcss to make it hidden below of 'md' breakpoint and display:flex above md breakpoint.
 
-## Learn More
+```jsx
+<ul className="hidden md:flex">
+  <li className="p-4">Home</li>
+  <li className="p-4">Company</li>
+  <li className="p-4">Resources</li>
+  <li className="p-4">About</li>
+  <li className="p-4">Contact</li>
+</ul>
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**[Navbar bugs/questions]**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1.  Assumming let window as half size of monitor and click the menu icon to open side navbar menu. Here is a problem: if I enlarge a window to full size, the side navbar is still remain and horizontally expanded-navbar on top is also shown together.
+2.  I had to make brandlogo two times: one for web version, and the other for mobile version. I am not sure whether it's the only way or not. Q) Is there any other simpler way?
 
-### Code Splitting
+### Step 2: Hero section
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Step 3 : Footer
 
-### Analyzing the Bundle Size
+### References:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1.  [Tailwind CSS](https://tailwindcss.com/docs/guides/create-react-app)
+2.  [Youtube tutorial](https://www.youtube.com/watch?v=ZU-drSVodBw)
